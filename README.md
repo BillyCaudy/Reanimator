@@ -43,22 +43,26 @@ Using React/Redux we will create all of our frontend views and manage the fronte
 * Interacting with the user's hardware to take pictures and display ghost of previous image
 
 ### Wireframes
-[PLACEHOLDER]
+![Wireframes](./documentation/imgs/wireframes.jpg)
 
 ### Accomplishments over the weekend ***May 11th & 12th***
 1. Majority of documentation
 1. Setup database
 1. User auth
-1. Look into gif generation
+1. Look into gif generation or animations
 1. React skeleton for major views
 
 ### Team Members & Division of Responsibilities
 - Billy Caudy
-  * CSS styling?
-  * Frontend React components?
+  * CSS styling
+  * Generating seed data
+  * Frontend React components
 - Elrashid Elzein
-  * Frontend to backend integration?
-  * Planning CRUD actions?
+  * Frontend to backend integration
+  * Planning CRUD actions
+  * Project skeleton setup
+  * React setup
 - Lance Smith
-  * Backend database setup?
-  * Wireframing and documentation?
+  * Creating MongoDB server
+  * Backend database setup
+  * Wireframing and documentation
