@@ -21,11 +21,11 @@ Primary goals:
 1. Generate video or gif from a collection
 1. Email notifications for users to take another photo
 1. Friending and homepage feed social features
-1. Take photos directly from device's camera 
 1. Production README
 
 ### Bonus Features
 1. Friends are able to view individual photos from sequence
+1. Take photos directly from device's camera 
 1. Build for mobile use
 
 ## Technologies & Technical Challenges
