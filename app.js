@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const db = require('./config/keys').mongoURI;
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 
 const users = require("./routes/api/users");
 const collections = require("./routes/api/collections");
@@ -11,13 +10,19 @@ const comments = require("./routes/api/comments");
 const likes = require("./routes/api/likes");
 const friendships = require("./routes/api/friendships");
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(bodyParser.json());
+
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
 app.get("/", (req, res) => {
-  res.send("Alright, alright, alright");
+  res.send("Home page");
 });
 app.use("/api/users", users);
 app.use("/api/collections", collections);
