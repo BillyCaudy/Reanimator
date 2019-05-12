@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const keys = require('../../config/keys');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 
@@ -11,6 +13,12 @@ router.get("/test", (req, res) => {
 
 //sign up route for users
 router.post('/signup', (req, res) => {
+  // const { errors, isValid } = validateSignUpInput(req.body);
+
+  // if (!isValid) {
+  //   return res.status(400).json(errors);
+  // }
+
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       return res.status(400).json({ email: "A user already exists with this email" });
@@ -26,7 +34,21 @@ router.post('/signup', (req, res) => {
           if (err) throw err;
           newUser.password = hash;
           newUser.save()
-            .then(user => res.json(user))
+            .then(user => {
+              const payload = { id: user.id, name: user.name };
+
+              jwt.sign(
+                payload,
+                keys.secretOrKey,
+                { expiresIn: 3600 },
+                (err, token) => {
+                  res.json({
+                    success: true,
+                    token: 'Bearer ' + token
+                  });
+                }
+              );
+            })
             .catch(err => console.log(err));
         });
       });
@@ -36,6 +58,12 @@ router.post('/signup', (req, res) => {
 
 //sign in route for users
 router.post('/signin', (req, res) => {
+  // const { errors, isValid } = validateSignInInput(req.body);
+
+  // if (!isValid) {
+  //   return res.status(400).json(errors);
+  // }
+
   const email = req.body.email;
   const password = req.body.password;
 
@@ -48,7 +76,19 @@ router.post('/signin', (req, res) => {
       bcrypt.compare(password, user.password)
         .then(isMatch => {
           if (isMatch) {
-            res.json({ msg: "Success" });
+            const payload = { id: user.id, name: user.name };
+
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              { expiresIn: 3600 },
+              (err, token) => {
+                res.json({
+                  success: true,
+                  token: 'Bearer ' + token
+                });
+              }
+            );
           } else {
             return res.status(400).json({ password: "Incorrect password" });
           }
