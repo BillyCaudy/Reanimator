@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CollectionSchema = new Schema({
-  ownerId: {
-    type: Number,
-    required: true
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'users'
   },
   title: {
     type: String,
