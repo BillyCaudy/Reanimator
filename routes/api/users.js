@@ -3,21 +3,33 @@ const router = express.Router();
 
 const keys = require('../../config/keys');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 const bcrypt = require('bcryptjs');
+
+const validateSignUpInput = require('../../validation/signup');
+const validateSignInInput = require('../../validation/signin');
 const User = require('../../models/User');
 
-//test route for users
-router.get("/test", (req, res) => {
-  res.json({ msg: "USERS TEST ROUTE" });
-});
+//authentication route
+router.get('/current', passport.authenticate(
+  'jwt',
+  { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email
+    });
+  }
+);
 
 //sign up route for users
 router.post('/signup', (req, res) => {
-  // const { errors, isValid } = validateSignUpInput(req.body);
+  const { errors, isValid } = validateSignUpInput(req.body);
 
-  // if (!isValid) {
-  //   return res.status(400).json(errors);
-  // }
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
@@ -35,7 +47,11 @@ router.post('/signup', (req, res) => {
           newUser.password = hash;
           newUser.save()
             .then(user => {
-              const payload = { id: user.id, name: user.name };
+              const payload = {
+                id: user.id,
+                name: user.name,
+                email: user.email
+              };
 
               jwt.sign(
                 payload,
@@ -58,11 +74,11 @@ router.post('/signup', (req, res) => {
 
 //sign in route for users
 router.post('/signin', (req, res) => {
-  // const { errors, isValid } = validateSignInInput(req.body);
+  const { errors, isValid } = validateSignInInput(req.body);
 
-  // if (!isValid) {
-  //   return res.status(400).json(errors);
-  // }
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
   const email = req.body.email;
   const password = req.body.password;
@@ -76,7 +92,11 @@ router.post('/signin', (req, res) => {
       bcrypt.compare(password, user.password)
         .then(isMatch => {
           if (isMatch) {
-            const payload = { id: user.id, name: user.name };
+            const payload = {
+              id: user.id,
+              name: user.name,
+              email: user.email
+            };
 
             jwt.sign(
               payload,

@@ -10,6 +10,10 @@ const comments = require("./routes/api/comments");
 const likes = require("./routes/api/likes");
 const friendships = require("./routes/api/friendships");
 
+const passport = require('passport');
+app.use(passport.initialize());
+require('./config/passport')(passport);
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
   extended: false
@@ -21,9 +25,6 @@ mongoose
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
-app.get("/", (req, res) => {
-  res.send("Home page");
-});
 app.use("/api/users", users);
 app.use("/api/collections", collections);
 app.use("/api/images", images);
