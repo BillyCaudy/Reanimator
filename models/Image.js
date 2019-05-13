@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ImageSchema = new Schema({
-  collectionId: {
-    type: Number,
-    required: true
+  parentCollection: {
+    type: Schema.Types.ObjectId,
+    ref: 'collections'
   },
   imgName: {
     type: String,
-    required: true
+    required: false
   },
-  imgData: {
-    type: Number,
+  imgUrl: {
+    type: String,
     required: true
   },
   date: {

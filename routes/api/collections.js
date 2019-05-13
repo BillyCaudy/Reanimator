@@ -33,6 +33,14 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
+//route to get a specific collection
+router.get('/collection/:collection_id', (req, res) => {
+  Collection
+    .findById(req.params.collection_id)
+    .then(collection => res.json(collection))
+    .catch(err => res.status(400).json(err));
+});
+
 //route to get all collections from a particular user
 router.get('/user/:user_id', (req, res) => {
   Collection
