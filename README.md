@@ -66,3 +66,4 @@ Using React/Redux we will create all of our frontend views and manage the fronte
   * Creating MongoDB server
   * Backend database setup
   * Wireframing and documentation
+  * Backend user auth
