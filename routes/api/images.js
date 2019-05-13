@@ -6,7 +6,7 @@ const Image = require('../../models/Image');
 const validateImageInput = require('../../validation/images');
 
 //route to create an image inside of a collection
-router.post('/collection/:collection_id',
+router.post('/collection/:collectionId',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { isValid, errors } = validateImageInput(req.body);
@@ -14,7 +14,7 @@ router.post('/collection/:collection_id',
     if (!isValid) return res.status(400).json(errors);
 
     const newImage = new Image({
-      parentCollection: req.params.collection_id,
+      parentCollection: req.params.collectionId,
       imgName: req.body.imgName,
       imgUrl: req.body.imgUrl
     });
@@ -25,17 +25,17 @@ router.post('/collection/:collection_id',
 );
 
 //route to get all images for specific collection
-router.get('/collection/:collection_id', (req, res) => {
+router.get('/collection/:collectionId', (req, res) => {
   Image
-    .find({ parentCollection: req.params.collection_id })
+    .find({ parentCollection: req.params.collectionId })
     .then(images => res.json(images))
     .catch(err => res.status(400).json(err));
 });
 
 //route to get a single image
-router.get('/image/:image_id', (req, res) => {
+router.get('/image/:imageId', (req, res) => {
   Image
-    .findById(req.params.image_id)
+    .findById(req.params.imageId)
     .then(image => res.json(image))
     .catch(err => res.status(400).json(err));
 });

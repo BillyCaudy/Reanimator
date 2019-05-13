@@ -6,7 +6,7 @@ const Comment = require('../../models/Comment');
 const validateCommentInput = require('../../validation/comments');
 
 //route to create a comment
-router.post('/',
+router.post('/collection/:collectionId',
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { isValid, errors } = validateCommentInput(req.body);
@@ -15,6 +15,7 @@ router.post('/',
 
     const newComment = new Comment({
       author: req.user.id,
+      parentCollection: req.params.collectionId,
       bodyText: req.body.bodyText
     });
 
@@ -32,9 +33,9 @@ router.get('/', (req, res) => {
 });
 
 //route to get all comments from particular user
-router.get('/user/:user_id', (req, res) => {
+router.get('/user/:userId', (req, res) => {
   Comment
-    .find({ author: req.params.user_id }).sort({ date: -1 })
+    .find({ author: req.params.userId }).sort({ date: -1 })
     .then(comments => res.json(comments))
     .catch(err => res.status(400).json(err));
 });

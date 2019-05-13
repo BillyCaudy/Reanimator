@@ -34,17 +34,17 @@ router.get('/', (req, res) => {
 });
 
 //route to get a specific collection
-router.get('/collection/:collection_id', (req, res) => {
+router.get('/collection/:collectionId', (req, res) => {
   Collection
-    .findById(req.params.collection_id)
+    .findById(req.params.collectionId)
     .then(collection => res.json(collection))
     .catch(err => res.status(400).json(err));
 });
 
 //route to get all collections from a particular user
-router.get('/user/:user_id', (req, res) => {
+router.get('/user/:userId', (req, res) => {
   Collection
-    .find({ owner: req.params.user_id }).sort({ date: -1 })
+    .find({ owner: req.params.userId }).sort({ date: -1 })
     .then(collections => res.json(collections))
     .catch(err => res.status(400).json(err));
 });

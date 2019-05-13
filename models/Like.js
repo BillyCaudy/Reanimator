@@ -2,12 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const LikeSchema = new Schema({
-  collectionId: {
-    type: Number,
+  parentCollection: {
+    type: Schema.Types.ObjectId,
+    ref: 'collections',
     required: true
   },
-  userId: {
-    type: Number,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
     required: true
   },
   date: {
