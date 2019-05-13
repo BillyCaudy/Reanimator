@@ -6,7 +6,7 @@ class HomePage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Reanimation Domination</h1>
+                <h1>Reanimation Logo Always Present</h1>
             </div>
         );
     }
