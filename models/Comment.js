@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
-  authorId: {
-    type: Number,
-    required: true
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'users'
   },
-  collectionId: {
-    type: Number,
-    required: true
+  parentCollection: {
+    type: Schema.Types.ObjectId,
+    ref: 'collections'
   },
-  body: {
+  bodyText: {
     type: String,
     required: true
   },
