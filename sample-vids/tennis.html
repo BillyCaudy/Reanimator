@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="tennis-stylesheet.css" />
+    </head>
+
+    <body id="body-bg">  
+        
+        <div id="frames-wrapper1" width="100%" height="100%"></div>
+        <script>
+            let wrapper1 = document.getElementById("frames-wrapper1");
+            let fillHTML1 = ''
+            fillHTML1 += `<div class="screen" 
+                style="--left: 100px;
+                    --top: 100px"
+                >`;
+            let numFrames1 = 59;
+            let sampleRate1 = 0.0333;
+            fillHTML1 += `<img id="set-size"
+                    src="./tennis/1.jpg"
+                >`;
+            for (let i = 1; i <= numFrames1; i++) {
+                fillHTML1 += `<img id="frame${i}"
+                    class="frame" 
+                    src="./tennis/${i}.jpg"
+                    style="--delay: ${(i - 1.0) * sampleRate1}s;
+                        --duration: ${sampleRate1 * numFrames1}s" 
+                >`;
+            }
+            fillHTML1 += '</div>';
+            wrapper1.innerHTML = fillHTML1;
+        </script>
+ 
+    </body>
+
+</html>
