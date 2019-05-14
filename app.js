@@ -3,6 +3,7 @@ const app = express();
 const db = require('./config/keys').mongoURI;
 const mongoose = require('mongoose');
 
+const seed = require("./routes/api/seed");
 const users = require("./routes/api/users");
 const collections = require("./routes/api/collections");
 const images = require("./routes/api/images");
@@ -25,6 +26,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
+app.get("/seed", seed.seedEverything);
 app.use("/api/users", users);
 app.use("/api/collections", collections);
 app.use("/api/images", images);

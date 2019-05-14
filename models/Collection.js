@@ -6,6 +6,10 @@ const CollectionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
+  images: [{
+    type: Schema.Types.ObjectId,
+    ref: 'images'
+  }],
   title: {
     type: String,
     required: false
