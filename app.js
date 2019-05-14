@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require("express");
 const app = express();
 const db = require('./config/keys').mongoURI;
@@ -10,6 +11,13 @@ const images = require("./routes/api/images");
 const comments = require("./routes/api/comments");
 const likes = require("./routes/api/likes");
 const friendships = require("./routes/api/friendships");
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('frontend/build'));
+  app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  })
+}
 
 const passport = require('passport');
 app.use(passport.initialize());
