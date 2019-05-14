@@ -17,10 +17,12 @@ class NavBar extends React.Component {
         if (this.props.loggedIn) {
             return (
                 <div>
-                    <Link to={'/Links'}>All Links</Link>
-                    <Link to={'/profile'}>Profile</Link>
-                    <Link to={'/new_image'}>Upload an Image</Link>
+                    {/* <Link to={'/Links'}>All Links</Link> */}
+                    <div>
+                        <Link to={'/profile-page'}>Profile</Link>
+                    </div>
                     <button onClick={this.logoutUser}>Logout</button>
+                    
                 </div>
             );
         } else {

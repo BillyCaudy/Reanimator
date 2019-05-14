@@ -5,6 +5,8 @@ import HomePage from './HomePage';
 import NavBarContainer from './nav/navbar_container';
 import LoginFormContainer from './session/login_form_container';
 import SignupFormContainer from './session/signup_form_container';
+import CollectionIndexContainer from './collections/collection_index_container';
+import ProfilePageContainer from './profile/profile_page_container';
 
 const App = () => (
     <div>
@@ -13,7 +15,8 @@ const App = () => (
             {/* <AuthRoute exact path = "/" component = {HomePage}/> */}
             <AuthRoute exact path="/login" component={LoginFormContainer} />
             <AuthRoute exact path="/signup" component={SignupFormContainer} />
-            {/* <ProtectedRoute exact path="/collections" component={CollectionsContainer} /> */}
+            <ProtectedRoute exact path="/collections" component={CollectionIndexContainer} />
+            <ProtectedRoute exact path="/profile-page" component={ProfilePageContainer} />
         </Switch>
     </div>
 )
