@@ -4,9 +4,12 @@ const Schema = mongoose.Schema;
 const CollectionSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
-    required: true
+    ref: 'users'
   },
+  images: [{
+    type: Schema.Types.ObjectId,
+    ref: 'images'
+  }],
   title: {
     type: String,
     required: false
