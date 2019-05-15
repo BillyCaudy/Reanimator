@@ -8,7 +8,7 @@ import CollectionIndexContainer from './collections/collection_index_container';
 import ProfilePageContainer from './profile/profile_page_container';
 // import Iframe from 'react-iframe'
 
-const App = () => (
+const App = ({store}) => (
     <div id="the-whole-enchilada">
         <div id="left-navbar-wrapper">
             <NavBarContainer/>
@@ -21,6 +21,8 @@ const App = () => (
             </Switch>
         </div>
         <div id="main-content-wrapper">
+            {console.log({ store })} 
+            {console.log(store.getState())} 
             <iframe title="unique" src="http://localhost:5000/stars.html" height="100%" width="100%"></iframe>
         </div>
     </div>

@@ -71,7 +71,7 @@ class LoginForm extends React.Component {
                             placeholder="Password"
                         />
                         <br />
-                        <input className="session-button" type="submit" value="Submit" />
+                        <input className="session-button" type="submit" value="Finish Login" />
                         {this.renderErrors()}
                     </div>
                 </form>
