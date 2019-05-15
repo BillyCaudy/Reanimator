@@ -1,8 +1,9 @@
 # Reanimator
 
 *Reanimator, photo sharing app to assist users in making timelapse gifs*
+PLEASE CLICK "Submit" BUTTON ***TWICE*** ON SIGNUP
 
-[Link to Live App](https://github.com/BillyCaudy/Reanimator)
+[Link to Live App](https://flex-reanimator.herokuapp.com)
 
 ## Background and Overview
 Reanimator's main feature is its ability to generate a timelapse video or gif from users uploading photos. When a user creates a new collection by taking the first photo, they will select an interval at which they want the app to notify them to upload another photo. This could be multiple times per day all the way up to once a month.
