@@ -1,6 +1,7 @@
 # Reanimator
 
 *Reanimator, photo sharing app to assist users in making timelapse gifs*
+
 PLEASE CLICK "Submit" BUTTON ***TWICE*** ON SIGNUP
 
 [Link to Live App](https://flex-reanimator.herokuapp.com)
