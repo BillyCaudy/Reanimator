@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="import" href="stars.html">
+</head>
+<body>
+    <div id="movie-wrapper" width="100%" height="100%"></div>
+    <script>
+        let movieWrapper = document.getElementById("movie-wrapper");
+        let fill = ''
+        fill += `<div class="screen" 
+                    style="--left: 100px; 
+                        --top: 100px"
+                >`;
+        let numFrames3 = 449;
+        let sampleRate3 = 0.0333;
+        fill += `<img id="set-size"
+                        src="./starwheel/1.jpg"
+                    >`;
+        for (let i = 1; i <= numFrames3; i++) {
+            fill += `<img id="frame${i}"
+                        class="frame-starwheel" 
+                        src="./starwheel/${i}.jpg"
+                        style="--delay: ${(i - 1.0) * sampleRate3}s;
+                            --duration: ${sampleRate3 * numFrames3}s" 
+                    >`;
+        }
+        fill += '</div>';
+        movieWrapper.innerHTML = fill;
+    </script>
+</body>
+</html>
