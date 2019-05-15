@@ -22,7 +22,7 @@ const App = () => (
             </Switch>
         </div>
         <div id="main-content-wrapper">
-            <iframe src="https://www.sfsu.edu" height="100%" width="100%"></iframe>
+            <iframe title="unique" src="http://localhost:5000/stars.html" height="100%" width="100%"></iframe>
         </div>
     </div>
 )
