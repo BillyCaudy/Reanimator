@@ -21,7 +21,7 @@ const App = () => (
       </Switch>
     </div>
     <div id="main-content-wrapper">
-      <iframe title="unique" src="https://localhost:5000/stars.html" height="100%" width="100%"></iframe>
+      <iframe title="unique" src="https://flex-reanimator.herokuapp.com/stars.html" height="100%" width="100%"></iframe>
     </div>
   </div>
 )
