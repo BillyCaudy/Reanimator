@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(db, { useNewUrlParser: false })
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
