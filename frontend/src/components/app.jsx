@@ -1,7 +1,6 @@
 import React from 'react';
 import { AuthRoute, ProtectedRoute } from '../util/rout_util';
-import { Switch, Link } from 'react-router-dom';
-import HomePage from './HomePage';
+import { Switch } from 'react-router-dom';
 import NavBarContainer from './nav/navbar_container';
 import LoginFormContainer from './session/login_form_container';
 import SignupFormContainer from './session/signup_form_container';
@@ -13,7 +12,7 @@ const App = () => (
     <div id="the-whole-enchilada">
         <div id="left-navbar-wrapper">
             <NavBarContainer/>
-            <Switch class="signin-switch">
+            <Switch id="signin-switch">
                 {/* <AuthRoute exact path = "/" component = {HomePage}/> */}
                 <AuthRoute exact path="/login" component={LoginFormContainer} />
                 <AuthRoute exact path="/signup" component={SignupFormContainer} />

@@ -30,14 +30,14 @@ iframe {
     align-items: center;
 }
 
-#left-navbar-wrapper, .navbar, .signin-switch {
+.navbar {
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
     align-items: center;
 }
 
-.navbar, .navbar * {
+.navbar *, .session-button, #profile-memories {
     font-family: "Lucida Console", Monaco, monospace;
     color: rgba(173,216,230,0.6);
     font-style: oblique;
@@ -49,32 +49,46 @@ iframe {
     margin: 10px;  
 }
 
-#login-form *, #signup-form * {
-    font-family: "Lucida Console", Monaco, monospace;
-    /* color: lightblue; */
-    font-style: oblique;
-    font-weight: 500;
+
+
+.session-form > input[type="text"], .session-form > input[type="password"] {
     font-size: 20px;
-    /* text-shadow: 0 0 4px magenta; */
     padding: 0 5px;
     margin: 10px;  
+  box-shadow: 0 0 5px white;
+}
+
+.session-form > input {
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  outline-style: none;
 }
 
 .button-style-link {
   font-size: 40px;
+  background-color: transparent;
+}
+
+.session-button {
+  font-size: 30px;
+  background-color: transparent;
+}
+
+.button-style-link, .session-button {
   border-width: 0px;
   border-radius: 12px;
   outline-style: none;
 }
 
-.button-style-link:hover {
+.button-style-link:hover, .session-button:hover {
   background-color: rgba(255, 0, 255, 0.1); 
   cursor: pointer;
   text-shadow: 0 0 12px magenta;
   box-shadow: 0 0 12px rgba(255, 0, 255, 0.2); 
 }
 
-.button-style-link:active {
+.button-style-link:active, .session-button:active {
   background-color: rgba(255, 0, 255, 0.2); 
   cursor: pointer;
   text-shadow: 0 0 12px magenta;

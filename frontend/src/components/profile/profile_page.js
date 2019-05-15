@@ -15,7 +15,7 @@ class ProfilePage extends React.Component {
     render() {
     
             return (
-                <div>
+                <div id="profile-memories">
                   <h1>Memories</h1>
                 </div>
             );
