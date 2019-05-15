@@ -16,9 +16,9 @@ class ProfilePage extends React.Component {
     
             return (
                 <div id="profile-memories">
-                    <div>Hi {this.props.currentUser.name}!</div>
-                    <img src="profile-pic.jpg" id="profile-pic"/> 
-                  <h1>Memories</h1>
+                    Hi {this.props.currentUser.name}!
+                    <div id="propic">💩</div> 
+                    Memories
                 </div>
             );
         }
