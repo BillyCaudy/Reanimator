@@ -1,64 +1,68 @@
 body {
-    background-color: rgba(38, 0, 65, 1);
-    width: 100%;
-    height: 100%;
+  background-color: rgba(38, 0, 65, 1);
+  width: 100%;
+  height: 100%;
 }
 
-iframe {
+.iframe {
   border: none;
 }
 
-#main-content-wrapper {
-    position: fixed;
-    background-color: transparent;
-    top: 0;
-    left: 320px;
-    width: 70%;
-    height: 100%;
+#main-content-wrapper,
+.iframe {
+  position: fixed;
+  background-color: transparent;
+  top: 0;
+  left: 320px;
+  width: 70%;
+  height: 100%;
 }
 
 #left-navbar-wrapper {
-    background-image: linear-gradient(rgba(0,0,0,0.8), transparent);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 320px;
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-    align-items: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), transparent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .navbar {
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.navbar *, .session-button, #profile-memories {
-    font-family: "Lucida Console", Monaco, monospace;
-    color: rgba(173,216,230,0.6);
-    font-style: oblique;
-    font-weight: 800;
-    font-size: 30px;
-    text-shadow: 0 0 4px magenta;
-    text-decoration-line: none;
-    padding: 0 5px;
-    margin: 10px;  
+.navbar *,
+.session-button,
+#profile-memories {
+  font-family: "Lucida Console", Monaco, monospace;
+  color: rgba(173, 216, 230, 0.6);
+  font-style: oblique;
+  font-weight: 800;
+  font-size: 30px;
+  text-shadow: 0 0 4px magenta;
+  text-decoration-line: none;
+  padding: 0 5px;
+  margin: 10px;
 }
 
 
 
-.session-form > input[type="text"], .session-form > input[type="password"] {
-    font-size: 20px;
-    padding: 0 5px;
-    margin: 10px;  
+.session-form>input[type="text"],
+.session-form>input[type="password"] {
+  font-size: 20px;
+  padding: 0 5px;
+  margin: 10px;
   box-shadow: 0 0 5px white;
 }
 
-.session-form > input {
+.session-form>input {
   height: 40px;
   border-radius: 10px;
   border: none;
@@ -75,23 +79,25 @@ iframe {
   background-color: transparent;
 }
 
-.button-style-link, .session-button {
+.button-style-link,
+.session-button {
   border-width: 0px;
   border-radius: 12px;
   outline-style: none;
 }
 
-.button-style-link:hover, .session-button:hover {
-  background-color: rgba(255, 0, 255, 0.1); 
+.button-style-link:hover,
+.session-button:hover {
+  background-color: rgba(255, 0, 255, 0.1);
   cursor: pointer;
   text-shadow: 0 0 12px magenta;
-  box-shadow: 0 0 12px rgba(255, 0, 255, 0.2); 
+  box-shadow: 0 0 12px rgba(255, 0, 255, 0.2);
 }
 
-.button-style-link:active, .session-button:active {
-  background-color: rgba(255, 0, 255, 0.2); 
+.button-style-link:active,
+.session-button:active {
+  background-color: rgba(255, 0, 255, 0.2);
   cursor: pointer;
   text-shadow: 0 0 12px magenta;
-  box-shadow: 0 0 24px rgba(255, 0, 255, 0.4); 
-} 
-
+  box-shadow: 0 0 24px rgba(255, 0, 255, 0.4);
+}

@@ -13,7 +13,7 @@ const likes = require("./routes/api/likes");
 const friendships = require("./routes/api/friendships");
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('frontend/public'));
+  app.use(express.static('frontend/build'));
   app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'public', 'index.html'));
   })
