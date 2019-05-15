@@ -9,7 +9,8 @@ import ProfilePageContainer from './profile/profile_page_container';
 // import Iframe from 'react-iframe'
 
 function iframeSelector() {
-  if (process.env.ENV_NODE === 'production') {
+  if (process.env.ENV_NODE !== 'production') {
+    console.log(process.env.ENV_NODE);
     return <iframe className='iframe' title="unique" src="https://flex-reanimator.herokuapp.com/stars.html" height="100%" width="100%"></iframe>;
   } else {
     return <iframe className='iframe' title="unique" src="http://localhost:5000/stars.html" height="100%" width="100%"></iframe>;
