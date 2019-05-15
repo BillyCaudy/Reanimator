@@ -8,6 +8,14 @@ import CollectionIndexContainer from './collections/collection_index_container';
 import ProfilePageContainer from './profile/profile_page_container';
 // import Iframe from 'react-iframe'
 
+function iframeSelector() {
+  if (process.env.ENV_NODE === 'production') {
+    return <iframe className='iframe' title="unique" src="https://flex-reanimator.herokuapp.com/stars.html" height="100%" width="100%"></iframe>;
+  } else {
+    return <iframe className='iframe' title="unique" src="http://localhost:5000/stars.html" height="100%" width="100%"></iframe>;
+  }
+}
+
 const App = () => (
   <div id="the-whole-enchilada">
     <div id="left-navbar-wrapper">
@@ -20,9 +28,7 @@ const App = () => (
         <ProtectedRoute exact path="/profile-page" component={ProfilePageContainer} />
       </Switch>
     </div>
-    <div id="main-content-wrapper">
-      <iframe title="unique" src="https://flex-reanimator.herokuapp.com/stars.html" height="100%" width="100%"></iframe>
-    </div>
+    {iframeSelector()}
   </div>
 )
 
