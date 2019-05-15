@@ -13,7 +13,7 @@ const likes = require("./routes/api/likes");
 const friendships = require("./routes/api/friendships");
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('frontend/build'));
+  app.use(express.static('frontend/public'));
   app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'public', 'index.html'));
   })
@@ -34,6 +34,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
+app.get('/', (req, res) => res.send("<div id='root'>Landing page</div>"));
 app.get("/seed", seed.seedEverything);
 app.use("/api/users", users);
 app.use("/api/collections", collections);
