@@ -12,13 +12,6 @@ const comments = require("./routes/api/comments");
 const likes = require("./routes/api/likes");
 const friendships = require("./routes/api/friendships");
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('frontend/build'));
-  app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'public', 'index.html'));
-  })
-}
-
 const passport = require('passport');
 app.use(passport.initialize());
 require('./config/passport')(passport);
@@ -34,7 +27,15 @@ mongoose
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
-app.get('/', (req, res) => res.send("<div id='root'>Landing page</div>"));
+//routes
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('frontend/build'));
+  app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'public', 'index.html'));
+  });
+}
+
+app.get('/', (req, res) => res.send("Landing page"));
 app.get("/seed", seed.seedEverything);
 app.use("/api/users", users);
 app.use("/api/collections", collections);
@@ -48,6 +49,7 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT || 5000;
 
+//path to sample videos
 app.use(express.static('./sample-vids'));
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
