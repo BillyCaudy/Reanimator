@@ -11,28 +11,47 @@ module.exports = {
   seedEverything: seedEverything
 };
 
-function seedEverything(req, res) {
+const users = [
+  {
+    name: "Seeded User 1",
+    email: "seed1@reanimator.com",
+    password: "password",
+    avatarUrl: "seed1"
+  },
+  {
+    name: "Seeded User 2",
+    email: "seed2@reanimator.com",
+    password: "password",
+    avatarUrl: "seed2"
+  },
+  {
+    name: "Seeded User 3",
+    email: "seed3@reanimator.com",
+    password: "password", avatarUrl: "seed3"
+  }
+];
 
-  /* USER SEEDING */
-  const users = [
-    {
-      name: "Seeded User 1",
-      email: "seed1@reanimator.com",
-      password: "password",
-      avatarUrl: "seed1"
-    },
-    {
-      name: "Seeded User 2",
-      email: "seed2@reanimator.com",
-      password: "password",
-      avatarUrl: "seed2"
-    },
-    {
-      name: "Seeded User 3",
-      email: "seed3@reanimator.com",
-      password: "password", avatarUrl: "seed3"
-    }
-  ];
+const collections = [
+  {
+    title: "Seed User 1 Title",
+    notificationFrequency: 3600,
+    animationSpeed: 0.05
+  },
+  {
+    title: "Seed User 2 Title",
+    notificationFrequency: 3600,
+    animationSpeed: 0.05
+  },
+  {
+    title: "Seed User 3 Title",
+    notificationFrequency: 3600,
+    animationSpeed: 0.05
+  }
+];
+
+function seedEverything(req, res) {
+  let userIds = [];
+  let collectionIds = [];
 
   User.deleteMany({}, () => {
     for (let user of users) {
@@ -43,36 +62,21 @@ function seedEverything(req, res) {
           if (err) throw err;
           newUser.password = hash;
           newUser.save();
+          userIds.push(newUser.id);
         });
       });
     }
+  }).then(() => {
+    Collection.deleteMany({}, () => {
+      for (let i = 0; i < collections.length; i++) {
+        let newCollection = new Collection(collections[i]);
+
+        newCollection.owner = userIds[i];
+        newCollection.save();
+        collectionIds.push(newCollection.id);
+      }
+      res.json({ userIds: userIds, collectionIds: collectionIds });
+    });
   });
 
-  /* COLLECTION SEEDING */
-  const collections = [
-    {
-      title: "Seed User 1 Title",
-      notificationFrequency: 3600,
-      animationSpeed: 0.05
-    },
-    {
-      title: "Seed User 2 Title",
-      notificationFrequency: 3600,
-      animationSpeed: 0.05
-    },
-    {
-      title: "Seed User 3 Title",
-      notificationFrequency: 3600,
-      animationSpeed: 0.05
-    }
-  ];
-
-  Collection.deleteMany({}, () => {
-    for (let coll of collections) {
-      let newCollection = new Collection(coll);
-      newCollection.save();
-    }
-  });
-
-  res.json({ message: 'done seeding' });
 }

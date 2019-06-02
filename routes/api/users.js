@@ -122,4 +122,8 @@ router.get("/:userId", (request, response) => {
   }).catch(() => response.send("User not found"));
 });
 
+router.get("/:userId/collections/:collectionId", (request, response) => {
+
+});
+
 module.exports = router;
