@@ -116,4 +116,10 @@ router.post('/signin', (req, res) => {
     });
 });
 
+router.get("/:userId", (request, response) => {
+  User.findById(request.params.userId).then(user => {
+    response.send(user);
+  }).catch(err => response.send("some error has occurred."));
+});
+
 module.exports = router;
