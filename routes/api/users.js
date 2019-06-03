@@ -123,7 +123,16 @@ router.get("/:userId", (request, response) => {
 });
 
 router.get("/:userId/collections/:collectionId", (request, response) => {
+  const targetId = request.params.collectionId;
 
+  User.findById(request.params.userId).populate("collections")
+    .then(obj => {
+      let targetColl = obj.collections.filter(coll => coll.id === targetId);
+      if (!targetColl.length) {
+        response.send("User does not have this collection");
+      }
+      response.json(targetColl);
+    });
 });
 
 module.exports = router;

@@ -51,6 +51,7 @@ const collections = [
 
 function seedEverything(req, res) {
   let userIds = [];
+  let userDocs = [];
   let collectionIds = [];
 
   User.deleteMany({}, () => {
@@ -62,6 +63,7 @@ function seedEverything(req, res) {
           if (err) throw err;
           newUser.password = hash;
           newUser.save();
+          userDocs.push(newUser);
           userIds.push(newUser.id);
         });
       });
@@ -74,8 +76,10 @@ function seedEverything(req, res) {
         newCollection.owner = userIds[i];
         newCollection.save();
         collectionIds.push(newCollection.id);
+        userDocs[i].collections.push(collectionIds[i]);
+        userDocs[i].save();
       }
-      res.json({ userIds: userIds, collectionIds: collectionIds });
+      res.json({ userIds, collectionIds, userDocs });
     });
   });
 
