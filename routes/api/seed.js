@@ -80,7 +80,6 @@ function seedEverything(req, res) {
         newCollection.save().then(() => {
           collectionIds.push(newCollection.id);
           userDocs[i].collections.push(collectionIds[i]);
-          userDocs[i].save();
         });
       }
     });
