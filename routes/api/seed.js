@@ -27,7 +27,8 @@ const users = [
   {
     name: "Seeded User 3",
     email: "seed3@reanimator.com",
-    password: "password", avatarUrl: "seed3"
+    password: "password",
+    avatarUrl: "seed3"
   }
 ];
 
@@ -53,6 +54,8 @@ function seedEverything(req, res) {
   let userIds = [];
   let userDocs = [];
   let collectionIds = [];
+  let friendshipIds = [];
+  let friendshipDocs = [];
 
   User.deleteMany({}, () => {
     for (let user of users) {
@@ -74,14 +77,32 @@ function seedEverything(req, res) {
         let newCollection = new Collection(collections[i]);
 
         newCollection.owner = userIds[i];
-        newCollection.save();
-        collectionIds.push(newCollection.id);
-        userDocs[i].collections.push(collectionIds[i]);
-        userDocs[i].save();
+        newCollection.save().then(() => {
+          collectionIds.push(newCollection.id);
+          userDocs[i].collections.push(collectionIds[i]);
+          userDocs[i].save();
+        });
       }
-      res.json({ userIds, collectionIds, userDocs });
     });
   }).then(() => {
-
+    Friendship.deleteMany({}, () => {
+      for (let i = 0; i < userDocs.length; i++) {
+        let friendship = new Friendship({
+          userId: userDocs[i].id
+        });
+        userIds.forEach(id => {
+          if (id !== userDocs[i].id) {
+            friendship.following.push(id);
+            friendship.followers.push(id);
+          }
+        });
+        friendship.save().then(() => {
+          friendshipDocs.push(friendship);
+          userDocs[i].friends = friendship.id;
+          userDocs[i].save();
+        });
+      }
+    });
+    res.send("complete");
   });
 }
