@@ -2,14 +2,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const FriendshipSchema = new Schema({
-  followerId: {
-    type: Number,
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "users",
     required: true
   },
-  followeeId: {
-    type: Number,
-    required: true
-  },
+  followers: [{
+    type: Schema.Types.ObjectId,
+    ref: "users"
+  }],
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: "users"
+  }],
   date: {
     type: Date,
     default: Date.now

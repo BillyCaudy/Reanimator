@@ -81,6 +81,7 @@ function seedEverything(req, res) {
       }
       res.json({ userIds, collectionIds, userDocs });
     });
-  });
+  }).then(() => {
 
+  });
 }

@@ -9,6 +9,7 @@ const bcrypt = require('bcryptjs');
 const validateSignUpInput = require('../../validation/signup');
 const validateSignInInput = require('../../validation/signin');
 const User = require('../../models/User');
+const Friendship = require("../../models/Friendship");
 
 //authentication route
 router.get('/current', passport.authenticate(
@@ -64,6 +65,11 @@ router.post('/signup', (req, res) => {
                   });
                 }
               );
+
+              const friendship = new Friendship({
+                userId: user.id
+              });
+              friendship.save();
             })
             .catch(err => console.log(err));
         });
@@ -126,8 +132,8 @@ router.get("/:userId/collections/:collectionId", (request, response) => {
   const targetId = request.params.collectionId;
 
   User.findById(request.params.userId).populate("collections")
-    .then(obj => {
-      let targetColl = obj.collections.filter(coll => coll.id === targetId);
+    .then(user => {
+      let targetColl = user.collections.filter(coll => coll.id === targetId);
       if (!targetColl.length) {
         response.send("User does not have this collection");
       }

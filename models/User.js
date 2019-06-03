@@ -6,14 +6,10 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "collections"
   }],
-  following: [{
+  friends: {
     type: Schema.Types.ObjectId,
-    ref: "following"
-  }],
-  followers: [{
-    type: Schema.Types.ObjectId,
-    ref: "followers"
-  }],
+    ref: "friendships"
+  },
   name: {
     type: String,
     required: true
