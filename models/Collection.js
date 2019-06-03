@@ -10,6 +10,14 @@ const CollectionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'images'
   }],
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'comments'
+  }],
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'likes'
+  }],
   title: {
     type: String,
     required: false
