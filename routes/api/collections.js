@@ -98,4 +98,14 @@ router.delete('/:collectionId',
   }
 );
 
+//route to get all images within a collection
+router.get("/:collectionId/images", (request, response) => {
+  Collection.findById(request.params.collectionId)
+    .populate("images")
+    .then(collection => {
+      response.json(collection.images);
+    })
+    .catch(err => res.status(400).json(err));
+});
+
 module.exports = router;
