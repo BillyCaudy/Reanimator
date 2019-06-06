@@ -189,6 +189,9 @@ async function startSeed() {
   }
   for (let i = 0; i < likes.length; i++) {
     await likes[i].save();
+    let coll = await Collection.findById(likes[i].parentCollection);
+    coll.likes.push(likes[i].id);
+    await coll.save();
   }
   console.log("Likes randomly generated");
 
