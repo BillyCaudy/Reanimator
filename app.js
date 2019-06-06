@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.get('/', (req, res) => res.send("Landing page"));
+app.get('/', (request, response) => response.send("Landing page"));
 app.use("/api/users", users);
 app.use("/api/collections", collections);
 app.use("/api/images", images);

@@ -4,8 +4,8 @@ const passport = require("passport");
 
 const User = require("../../models/User");
 
-router.get("/test", (req, res) => res.json({ msg: "friendships TEST ROUTE" }));
-
+/* verified */
+//route to get collections from a friend
 router.get("/:friendId/collections",
   passport.authenticate("jwt", { session: false }),
   (request, response) => {

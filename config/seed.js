@@ -10,10 +10,10 @@ mongoose.connect(
 const User = require("../models/User");
 const users = [
   new User({
-    name: "User 1",
-    email: "user1@reanimator.com",
+    name: "Guest",
+    email: "guest@reanimator.com",
     password: "password",
-    avatarUrl: "user1"
+    avatarUrl: "guest"
   }),
   new User({
     name: "User 2",

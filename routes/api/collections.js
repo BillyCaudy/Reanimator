@@ -5,7 +5,27 @@ const passport = require('passport');
 const Collection = require('../../models/Collection');
 const Image = require('../../models/Image');
 const validateCollectionInput = require('../../validation/collections');
+const validateImageInput = require("../../validation/images");
 
+/* verified */
+//route to get all collections
+router.get('/', (req, res) => {
+  Collection
+    .find().sort({ date: -1 })
+    .then(collections => res.json(collections))
+    .catch(err => res.status(400).json(err));
+});
+
+/* verified */
+//route to get a specific collection
+router.get('/:collectionId', (req, res) => {
+  Collection
+    .findById(req.params.collectionId)
+    .then(collection => res.json(collection))
+    .catch(err => res.status(400).json(err));
+});
+
+/* verified */
 //route to create a collection
 router.post('/',
   passport.authenticate('jwt', { session: false }),
@@ -26,13 +46,68 @@ router.post('/',
   }
 );
 
-//route to get all collections
-router.get('/', (req, res) => {
-  Collection
-    .find().sort({ date: -1 })
-    .then(collections => res.json(collections))
+/* verifed */
+//route to delete a collection
+router.delete('/:collectionId',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const message1 = 'Collection deleted';
+    const message2 = 'Images deleted';
+
+    Image
+      .deleteMany({
+        parentCollection: req.params.collectionId
+      })
+      .then(() => res.json({ message2 }))
+      .catch(err => res.status(400).json(err));
+
+    Collection
+      .deleteMany({
+        _id: req.params.collectionId
+      })
+      .then(() => res.json({ message1 }))
+      .catch(err => res.status(400).json(err));
+  }
+);
+
+/* verified */
+//route to get all images within a collection
+router.get("/:collectionId/images", (request, response) => {
+  Collection.findById(request.params.collectionId)
+    .populate("images")
+    .then(collection => {
+      response.json(collection.images);
+    })
     .catch(err => res.status(400).json(err));
 });
+
+/* verified */
+//route to create an image inside of a collection
+router.post('/:collectionId/images',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { isValid, errors } = validateImageInput(req.body);
+
+    if (!isValid) return res.status(400).json(errors);
+
+    const newImage = new Image({
+      parentCollection: req.params.collectionId,
+      imgName: req.body.imgName,
+      imgUrl: req.body.imgUrl
+    });
+
+    newImage.save()
+      .then(image => {
+        Collection.findById(req.params.collectionId)
+          .then(coll => {
+            coll.images.push(image.id);
+            coll.save();
+          });
+
+        res.json(image);
+      });
+  }
+);
 
 //route to update collection
 router.patch('/:collectionId',
@@ -59,13 +134,6 @@ router.patch('/:collectionId',
   }
 );
 
-//route to get a specific collection
-router.get('/:collectionId', (req, res) => {
-  Collection
-    .findById(req.params.collectionId)
-    .then(collection => res.json(collection))
-    .catch(err => res.status(400).json(err));
-});
 
 //route to get all collections from a particular user
 router.get('/user/:userId', (req, res) => {
@@ -75,37 +143,6 @@ router.get('/user/:userId', (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//route to delete a collection
-router.delete('/:collectionId',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const message1 = 'Collection deleted';
-    const message2 = 'Images deleted';
 
-    Image
-      .deleteMany({
-        parentCollection: req.params.collectionId
-      })
-      .then(() => res.json({ message2 }))
-      .catch(err => res.status(400).json(err));
-
-    Collection
-      .deleteMany({
-        _id: req.params.collectionId
-      })
-      .then(() => res.json({ message1 }))
-      .catch(err => res.status(400).json(err));
-  }
-);
-
-//route to get all images within a collection
-router.get("/:collectionId/images", (request, response) => {
-  Collection.findById(request.params.collectionId)
-    .populate("images")
-    .then(collection => {
-      response.json(collection.images);
-    })
-    .catch(err => res.status(400).json(err));
-});
 
 module.exports = router;
