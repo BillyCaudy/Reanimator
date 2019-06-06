@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const Friendship = require("../models/Friendship");
 
 //database connection
 const mongoose = require("mongoose");
@@ -48,6 +49,35 @@ const collections = [
   }),
 ];
 
+const Image = require("../models/Image");
+let images1 = [];
+for (let i = 0; i < 20; i++) {
+  images1.push(
+    new Image({
+      imgName: `Image #${i}`,
+      imgUrl: `image.url${i}`
+    })
+  );
+}
+let images2 = [];
+for (let i = 0; i < 20; i++) {
+  images2.push(
+    new Image({
+      imgName: `Image #${i}`,
+      imgUrl: `image.url${i}`
+    })
+  );
+}
+let images3 = [];
+for (let i = 0; i < 20; i++) {
+  images3.push(
+    new Image({
+      imgName: `Image #${i}`,
+      imgUrl: `image.url${i}`
+    })
+  );
+}
+
 async function startSeed() {
   await User.deleteMany({});
   console.log("Users purged");
@@ -58,15 +88,48 @@ async function startSeed() {
       });
     });
     await users[i].save();
-    console.log(users[i].name);
   }
+  console.log("Users created");
 
   await Collection.deleteMany({});
   console.log("Collections purged");
   for (let i = 0; i < collections.length; i++) {
     await collections[i].save();
-    console.log(collections[i].title);
   }
+  console.log("Collections created");
+
+  for (let i = 0; i < users.length; i++) {
+    users[i].collections.push(collections[i].id);
+    await users[i].save();
+
+    collections[i].owner = users[i].id;
+    await collections[i].save();
+  }
+  console.log("Users/Collections connected");
+
+  await Image.deleteMany({});
+  for (let i = 0; i < images1.length; i++) {
+    images1[i].parentCollection = collections[0].id;
+    await images1[i].save();
+    images2[i].parentCollection = collections[1].id;
+    await images2[i].save();
+    images3[i].parentCollection = collections[2].id;
+    await images3[i].save();
+  }
+  console.log("Images created");
+
+  for (let i = 0; i < images1.length; i++) {
+    collections[0].images.push(images1[i].id);
+    collections[1].images.push(images2[i].id);
+    collections[2].images.push(images3[i].id);
+  }
+  await collections[0].save();
+  await collections[1].save();
+  await collections[2].save();
+  console.log("20 images added to each collection");
+
+  // await Friendship.deleteMany({});
+  // for (let i = 0; i < length)
 
   mongoose.disconnect();
 }
