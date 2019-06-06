@@ -80,6 +80,19 @@ for (let i = 0; i < 20; i++) {
   );
 }
 
+const Comment = require("../models/Comment");
+const comments = [
+  new Comment({ bodyText: "Amazing photos" }),
+  new Comment({ bodyText: "Keep posting" }),
+  new Comment({ bodyText: "Hey, follow me 4 a follow back" }),
+  new Comment({ bodyText: "Hit the ground running" }),
+  new Comment({ bodyText: "Hai" }),
+  new Comment({ bodyText: "This app is cool" })
+];
+
+const Like = require("../models/Like");
+let likes = [];
+
 async function startSeed() {
   await User.deleteMany({});
   console.log("Users purged");
@@ -145,6 +158,39 @@ async function startSeed() {
     await association.save();
   }
   console.log("Friendships created");
+
+  await Comment.deleteMany({});
+  for (let i = 0; i < comments.length; i++) {
+    let coll = collections[i % collections.length];
+    comments[i].author = users[i % users.length].id;
+    comments[i].parentCollection = coll.id;
+    await comments[i].save();
+
+    coll.comments.push(comments[i].id);
+  }
+  for (let i = 0; i < collections.length; i++) {
+    await collections[i].save();
+  }
+  console.log("Comments created");
+
+  await Like.deleteMany({});
+  for (let i = 0; i < users.length; i++) {
+    for (let j = 0; j < collections.length; j++) {
+      let randNo = Math.floor(Math.random() * 100 + 1);
+      if (randNo > 30) {
+        likes.push(
+          new Like({
+            parentCollection: collections[j].id,
+            user: users[i].id
+          })
+        );
+      }
+    }
+  }
+  for (let i = 0; i < likes.length; i++) {
+    await likes[i].save();
+  }
+  console.log("Likes randomly generated");
 
   mongoose.disconnect();
 }
