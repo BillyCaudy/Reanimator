@@ -1,5 +1,4 @@
 const bcrypt = require("bcryptjs");
-const Friendship = require("../models/Friendship");
 
 //database connection
 const mongoose = require("mongoose");
@@ -29,6 +28,9 @@ const users = [
     avatarUrl: "user3"
   })
 ];
+
+const Friendship = require("../models/Friendship");
+let friendships = [];
 
 const Collection = require("../models/Collection");
 const collections = [
@@ -128,8 +130,21 @@ async function startSeed() {
   await collections[2].save();
   console.log("20 images added to each collection");
 
-  // await Friendship.deleteMany({});
-  // for (let i = 0; i < length)
+  await Friendship.deleteMany({});
+  for (let i = 0; i < users.length; i++) {
+    let association = new Friendship({
+      userId: users[i].id
+    });
+    friendships.push(association);
+    for (let j = 0; j < users.length; j++) {
+      if (i !== j) {
+        association.followers.push(users[j].id);
+        association.following.push(users[j].id);
+      }
+    }
+    await association.save();
+  }
+  console.log("Friendships created");
 
   mongoose.disconnect();
 }
