@@ -1,0 +1,101 @@
+
+#body-bg {
+    background-color: rgba(38, 0, 65, 1);
+}
+
+.screen {
+    position: absolute;
+    top: var(--top);
+    left: var(--left);
+    margin: 40px;
+    border: 2px solid;
+    border-color: rgba(127, 127, 127,0.5);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgb(127,127,127);
+    outline: none;
+    padding: 0 0 -4px 0;
+}
+
+#set-size {
+    visibility: hidden;
+    display: block;
+}
+
+$flash-time: 100%; // gloabl variable must be reassigned below
+$no-time: 0.0000001%; // 1 nanosecond per second of total duration
+$num-frames: 59; // gloabl variable must be reassigned below
+
+@mixin set-num-frames ($num) {
+    // $num-frames: #{$num} !global;
+}
+
+.frame {
+    position:absolute;
+    left:0px;
+    top:0px;
+    visibility: hidden;
+    @include set-num-frames(var(--num-frames));
+    $flash-time: 100% / $num-frames !global; 
+}
+
+@mixin sass-keyframes ($animation-name) {
+
+    @keyframes #{$animation-name} {
+        @content;
+    }
+    
+    @-moz-keyframes #{$animation-name} {    
+        @content;
+    }
+    
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+ 
+}
+
+// @mixin flash-frames($duration-per-frame, $no-time: 0.000001%) {
+//     from {visibility: hidden;}
+//     #{$no-time} {visibility: visible;}
+//     #{$duration-per-frame} {visibility: visible;}
+//     #{$duration-per-frame + $no-time} {visibility: hidden;}
+//     to {visibility: hidden;}
+// }
+
+@include sass-keyframes(flash) {
+    from {visibility: hidden;}
+    #{$no-time} {visibility: visible;}
+    #{$flash-time} {visibility: visible;}
+    #{$flash-time + $no-time} {visibility: hidden;}
+    to {visibility: hidden;}
+}
+
+@mixin sass-animation ($animation-name, $delay, $duration, $count: infinite, $direction: forwards, $fillmode: forwards) {
+
+    animation-name: $animation-name;
+    animation-delay: $delay;
+    animation-duration: $duration;
+    animation-iteration-count: $count;
+    animation-direction: $direction;
+    animation-fill-mode: $fillmode;
+
+    -moz-animation-name: $animation-name;
+    -moz-animation-delay: $delay;
+    -moz-animation-duration: $duration;
+    -moz-animation-iteration-count: $count;
+    -moz-animation-direction: $direction;
+    -moz-animation-fill-mode: $fillmode;
+    
+    -webkit-animation-name: $animation-name;
+    -webkit-animation-delay: $delay;
+    -webkit-animation-duration: $duration;
+    -webkit-animation-iteration-count: $count;
+    -webkit-animation-direction: $direction;
+    -webkit-animation-fill-mode: $fillmode;
+    
+}
+
+.frame {
+    $delay: var(--delay);
+    @include sass-animation("flash", $delay, var(--duration));
+}
