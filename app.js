@@ -4,7 +4,6 @@ const app = express();
 const db = require('./config/keys').mongoURI;
 const mongoose = require('mongoose');
 
-const seed = require("./routes/api/seed");
 const users = require("./routes/api/users");
 const collections = require("./routes/api/collections");
 const images = require("./routes/api/images");
@@ -36,7 +35,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/', (req, res) => res.send("Landing page"));
-app.get("/seed", seed.seedEverything);
 app.use("/api/users", users);
 app.use("/api/collections", collections);
 app.use("/api/images", images);
