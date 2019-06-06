@@ -1,0 +1,80 @@
+#body-bg {
+  background-color: #260041; }
+
+.screen {
+  position: absolute;
+  top: var(--top);
+  left: var(--left);
+  margin: 40px;
+  border: 2px solid;
+  border-color: rgba(127, 127, 127, 0.5);
+  border-radius: 5px;
+  box-shadow: 0 0 5px #7f7f7f;
+  outline: none;
+  padding: 0 0 -4px 0; }
+
+#set-size {
+  visibility: hidden;
+  display: block; }
+
+.frame {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  visibility: hidden; }
+
+@keyframes flash {
+  from {
+    visibility: hidden; }
+  0.0000001% {
+    visibility: visible; }
+  1.6949152542% {
+    visibility: visible; }
+  1.6949153542% {
+    visibility: hidden; }
+  to {
+    visibility: hidden; } }
+@-moz-keyframes flash {
+  from {
+    visibility: hidden; }
+  0.0000001% {
+    visibility: visible; }
+  1.6949152542% {
+    visibility: visible; }
+  1.6949153542% {
+    visibility: hidden; }
+  to {
+    visibility: hidden; } }
+@-webkit-keyframes flash {
+  from {
+    visibility: hidden; 
+    color: var(--color);}
+  0.0000001% {
+    visibility: visible; }
+  1.6949152542% {
+    visibility: visible; }
+  1.6949153542% {
+    visibility: hidden; }
+  to {
+    visibility: hidden; } }
+.frame {
+  animation-name: "flash";
+  animation-delay: var(--delay);
+  animation-duration: var(--duration);
+  animation-iteration-count: infinite;
+  animation-direction: forwards;
+  animation-fill-mode: forwards;
+  -moz-animation-name: "flash";
+  -moz-animation-delay: var(--delay);
+  -moz-animation-duration: var(--duration);
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: forwards;
+  -moz-animation-fill-mode: forwards;
+  -webkit-animation-name: "flash";
+  -webkit-animation-delay: var(--delay);
+  -webkit-animation-duration: var(--duration);
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: forwards;
+  -webkit-animation-fill-mode: forwards; }
+
+/*# sourceMappingURL=converted-minstyle-tennis.css.map */
