@@ -109,6 +109,42 @@ router.post('/:collectionId/images',
   }
 );
 
+/* verified */
+//route to get an image from a collection
+router.get("/:collectionId/images/:imageId", (request, response) => {
+  const collId = request.params.collectionId;
+  const imgId = request.params.imageId;
+
+  Collection.findById(collId).then(collection => {
+    let idx = collection.images.indexOf(imgId);
+    Image.findById(collection.images[idx]).then(img => {
+      if (img === null) response.status(404).json({ msg: "Image not found" });
+      response.json(img);
+    });
+  }).catch(err => response.status(404).json(err));
+});
+
+/* verified */
+//route to delete an image from a collection
+router.delete("/:collectionId/images/:imageId", (request, response) => {
+  const collId = request.params.collectionId;
+  const imgId = request.params.imageId;
+
+  Collection
+    .findById(collId)
+    .then(collection => {
+      let idx = collection.images.indexOf(imgId);
+      Image
+        .deleteMany({ _id: collection.images[idx] })
+        .then(() => {
+          collection.images.splice(idx, 1);
+          collection.save().then(() => response.send("operation complete"));
+          response.json(collection);
+        }).catch(() => response.status(404).send("Image not found"));
+
+    }).catch(() => response.status(404).send("Collection not found"));
+});
+
 //route to update collection
 router.patch('/:collectionId',
   passport.authenticate('jwt', { session: false }),
