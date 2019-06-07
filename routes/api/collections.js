@@ -145,6 +145,11 @@ router.delete("/:collectionId/images/:imageId", (request, response) => {
     }).catch(() => response.status(404).send("Collection not found"));
 });
 
+//get all comments on a collection
+router.get("/:collectionId/comments", (response, request) => {
+
+});
+
 //route to update collection
 router.patch('/:collectionId',
   passport.authenticate('jwt', { session: false }),
@@ -170,7 +175,6 @@ router.patch('/:collectionId',
   }
 );
 
-
 //route to get all collections from a particular user
 router.get('/user/:userId', (req, res) => {
   Collection
@@ -178,7 +182,5 @@ router.get('/user/:userId', (req, res) => {
     .then(collections => res.json(collections))
     .catch(err => res.status(400).json(err));
 });
-
-
 
 module.exports = router;
