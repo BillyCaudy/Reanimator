@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 
 const User = require("../../models/User");
+const Friendship = require("../../models/Friendship");
 
 /* verified */
 //route to get collections from a friend
@@ -20,25 +21,34 @@ router.get("/:friendId/collections",
   }
 );
 
+/* verified */
+//route that gets all of your followers
 router.get("/followers",
   passport.authenticate("jwt", { session: false }),
   (request, response) => {
-    response.json({
-      obj: request.user
-    });
+
+    Friendship
+      .where("userId", request.user.id)
+      .populate("followers")
+      .then(obj => {
+        response.json({ followers: obj[0].followers });
+      });
+  }
+);
+
+/* verified */
+//route that gets all of your followers
+router.get("/following",
+  passport.authenticate("jwt", { session: false }),
+  (request, response) => {
+
+    Friendship
+      .where("userId", request.user.id)
+      .populate("following")
+      .then(obj => {
+        response.json({ following: obj[0].following });
+      });
   }
 );
 
 module.exports = router;
-
-router.get('/current', passport.authenticate(
-  'jwt',
-  { session: false }),
-  (req, res) => {
-    res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email
-    });
-  }
-);
