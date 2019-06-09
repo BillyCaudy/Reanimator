@@ -5,7 +5,6 @@ const passport = require("passport");
 const User = require("../../models/User");
 const Friendship = require("../../models/Friendship");
 
-/* verified */
 //route to get collections from a friend
 router.get("/:friendId/collections",
   passport.authenticate("jwt", { session: false }),
@@ -21,7 +20,6 @@ router.get("/:friendId/collections",
   }
 );
 
-/* verified */
 //route that gets all of your followers
 router.get("/followers",
   passport.authenticate("jwt", { session: false }),
@@ -36,7 +34,6 @@ router.get("/followers",
   }
 );
 
-/* verified */
 //route that gets all of your followers
 router.get("/following",
   passport.authenticate("jwt", { session: false }),
@@ -51,7 +48,6 @@ router.get("/following",
   }
 );
 
-/* verified */
 //route to start following someone
 router.post("/following/:userId",
   passport.authenticate("jwt", { session: false }),
@@ -65,7 +61,6 @@ router.post("/following/:userId",
   }
 );
 
-/* verified */
 //route to unfollow a user
 router.delete("/following/:userId",
   passport.authenticate("jwt", { session: false }),

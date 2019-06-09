@@ -11,7 +11,6 @@ const validateSignInInput = require('../../validation/signin');
 const User = require('../../models/User');
 const Friendship = require("../../models/Friendship");
 
-/* verified */
 //authentication route
 router.get('/current', passport.authenticate(
   'jwt',
@@ -25,7 +24,6 @@ router.get('/current', passport.authenticate(
   }
 );
 
-/* verified */
 //sign up route for users
 router.post('/signup', (req, res) => {
   const { errors, isValid } = validateSignUpInput(req.body);
@@ -80,7 +78,6 @@ router.post('/signup', (req, res) => {
   });
 });
 
-/* verified */
 //sign in route for users
 router.post('/signin', (req, res) => {
   const { errors, isValid } = validateSignInInput(req.body);
@@ -125,7 +122,6 @@ router.post('/signin', (req, res) => {
     });
 });
 
-/* verified */
 //gets a user document by id
 router.get("/:userId", (request, response) => {
   User.findById(request.params.userId).then(user => {
@@ -133,7 +129,6 @@ router.get("/:userId", (request, response) => {
   }).catch(() => response.send("User not found"));
 });
 
-/* verified */
 //gets a collection from a user
 router.get("/:userId/collections/:collectionId", (request, response) => {
   const targetId = request.params.collectionId;

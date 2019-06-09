@@ -6,8 +6,8 @@ const Collection = require('../../models/Collection');
 const Image = require('../../models/Image');
 const validateCollectionInput = require('../../validation/collections');
 const validateImageInput = require("../../validation/images");
+const validateCommentInput = require("../../validation/comments");
 
-/* verified */
 //route to get all collections
 router.get('/', (req, res) => {
   Collection
@@ -16,7 +16,6 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-/* verified */
 //route to get a specific collection
 router.get('/:collectionId', (req, res) => {
   Collection
@@ -25,7 +24,6 @@ router.get('/:collectionId', (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-/* verified */
 //route to create a collection
 router.post('/',
   passport.authenticate('jwt', { session: false }),
@@ -46,7 +44,6 @@ router.post('/',
   }
 );
 
-/* verifed */
 //route to delete a collection
 router.delete('/:collectionId',
   passport.authenticate('jwt', { session: false }),
@@ -70,7 +67,6 @@ router.delete('/:collectionId',
   }
 );
 
-/* verified */
 //route to get all images within a collection
 router.get("/:collectionId/images", (request, response) => {
   Collection.findById(request.params.collectionId)
@@ -81,7 +77,6 @@ router.get("/:collectionId/images", (request, response) => {
     .catch(err => res.status(400).json(err));
 });
 
-/* verified */
 //route to create an image inside of a collection
 router.post('/:collectionId/images',
   passport.authenticate('jwt', { session: false }),
@@ -109,7 +104,6 @@ router.post('/:collectionId/images',
   }
 );
 
-/* verified */
 //route to get an image from a collection
 router.get("/:collectionId/images/:imageId", (request, response) => {
   const collId = request.params.collectionId;
@@ -124,7 +118,6 @@ router.get("/:collectionId/images/:imageId", (request, response) => {
   }).catch(err => response.status(404).json(err));
 });
 
-/* verified */
 //route to delete an image from a collection
 router.delete("/:collectionId/images/:imageId", (request, response) => {
   const collId = request.params.collectionId;
@@ -134,53 +127,84 @@ router.delete("/:collectionId/images/:imageId", (request, response) => {
     .findById(collId)
     .then(collection => {
       let idx = collection.images.indexOf(imgId);
-      Image
-        .deleteMany({ _id: collection.images[idx] })
-        .then(() => {
-          collection.images.splice(idx, 1);
-          collection.save().then(() => response.send("operation complete"));
-          response.json(collection);
-        }).catch(() => response.status(404).send("Image not found"));
-
+      if (idx === -1) {
+        response.json({ msg: "Cannot find image" });
+      } else {
+        Image
+          .deleteMany({ _id: collection.images[idx] })
+          .then(() => {
+            collection.images.splice(idx, 1);
+            collection.save().then(() => response.send("operation complete"));
+            response.json(collection);
+          }).catch(() => response.status(404).send("Image not found"));
+      }
     }).catch(() => response.status(404).send("Collection not found"));
 });
 
 //get all comments on a collection
-router.get("/:collectionId/comments", (response, request) => {
+router.get("/:collectionId/comments", (request, response) => {
+  let collId = request.params.collectionId;
 
+  Collection
+    .findById(collId)
+    .populate("comments")
+    .then(collection => {
+      response.json({ comments: collection.comments });
+    }).catch(() => response.status(404).send("Collection not found"));
 });
 
-//route to update collection
-router.patch('/:collectionId',
+//post a comment on a collection
+router.post("/:collectionId/comments",
   passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const { isValid, errors } = validateCollectionInput(req.body);
-    if (!isValid) return res.status(400).json(errors);
+  (request, response) => {
+    let collId = request.params.collectionId;
 
-    Collection.findById(req.params.collectionId)
-      .then(collection => {
+    const { isValid, errors } = validateCommentInput(request.body);
+    if (!isValid) return response.status(400).json(errors);
 
-        if (!collection.owner.equals(req.user._id)) {
-          return res.status(400).json({
-            text: 'That is not your collection to edit'
+    const newComment = new Comment({
+      parentCollection: collId,
+      author: request.user.id,
+      bodyText: request.body.bodyText
+    });
+
+    newComment
+      .save()
+      .then(comment => {
+        Collection
+          .findById(collId)
+          .then(collection => {
+            collection.comments.push(comment.id);
+            collection.save();
           });
-        }
-
-        collection.updateOne({
-          title: req.body.title,
-          notificationFrequency: req.body.notificationFrequency,
-          animationSpeed: req.body.animationSpeed
-        }).then(collection => res.json(collection));
+        response.json({ comment });
       });
   }
 );
 
-//route to get all collections from a particular user
-router.get('/user/:userId', (req, res) => {
-  Collection
-    .find({ owner: req.params.userId }).sort({ date: -1 })
-    .then(collections => res.json(collections))
-    .catch(err => res.status(400).json(err));
-});
+//delete a comment from a collection
+router.delete("/:collectionId/comments/:commentId",
+  passport.authenticate("jwt", { session: false }),
+  (request, response) => {
+    const collId = request.params.collectionId;
+    const commentId = request.params.commentId;
+
+    Collection
+      .findById(collId)
+      .then(collection => {
+        let idx = collection.comments.indexOf(commentId);
+        if (idx === -1) {
+          response.json({ msg: "Cannot find comment" });
+        } else {
+          Comment
+            .deleteMany({ _id: collection.comments[idx] })
+            .then(() => {
+              collection.comments.splice(idx, 1);
+              collection.save().then(() => response.send("operation complete"));
+              response.json(collection);
+            }).catch(() => response.status(404).send("Comment not found"));
+        }
+      }).catch(() => response.status(404).send("Collection not found"));
+  });
 
 module.exports = router;

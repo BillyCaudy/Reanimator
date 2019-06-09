@@ -6,9 +6,6 @@ const mongoose = require('mongoose');
 
 const users = require("./routes/api/users");
 const collections = require("./routes/api/collections");
-const images = require("./routes/api/images");
-const comments = require("./routes/api/comments");
-const likes = require("./routes/api/likes");
 const friendships = require("./routes/api/friendships");
 
 const passport = require('passport');
@@ -37,10 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/', (request, response) => response.send("Landing page"));
 app.use("/api/users", users);
 app.use("/api/collections", collections);
-app.use("/api/images", images);
 app.use("/api/friendships", friendships);
-app.use("/api/comments", comments);
-app.use("/api/likes", likes);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
