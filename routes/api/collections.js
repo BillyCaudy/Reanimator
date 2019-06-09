@@ -205,6 +205,25 @@ router.delete("/:collectionId/comments/:commentId",
             }).catch(() => response.status(404).send("Comment not found"));
         }
       }).catch(() => response.status(404).send("Collection not found"));
-  });
+  }
+);
+
+//get all likes on a collection
+router.get("/:collectionId/likes", (request, response) => {
+  let collId = request.params.collectionId;
+
+  Collection.findById(collId)
+    .then(collection => {
+      response.json({ likes: collection.likes });
+    }).catch(err => response.status(400).json(err));
+});
+
+//like a collection
+router.post("/:collectionId/likes",
+  passport.authenticate("jwt", { session: false }),
+  (request, response) => {
+
+  }
+);
 
 module.exports = router;
