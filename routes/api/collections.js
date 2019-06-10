@@ -4,6 +4,8 @@ const passport = require('passport');
 
 const Collection = require('../../models/Collection');
 const Image = require('../../models/Image');
+const Comment = require("../../models/Comment");
+const Like = require("../../models/Like");
 const validateCollectionInput = require('../../validation/collections');
 const validateImageInput = require("../../validation/images");
 const validateCommentInput = require("../../validation/comments");
@@ -222,7 +224,56 @@ router.get("/:collectionId/likes", (request, response) => {
 router.post("/:collectionId/likes",
   passport.authenticate("jwt", { session: false }),
   (request, response) => {
+    let collId = request.params.collectionId;
+    let saveLike = true;
 
+    Collection.findById(collId).populate("likes")
+      .then(collection => {
+
+        for (let i = 0; i < collection.likes.length; i++) {
+          if (collection.likes[i].user.equals(request.user.id)) {
+            response.json({ msg: "You already like this" });
+            saveLike = false;
+          }
+        }
+
+        if (saveLike) {
+          let newLike = new Like({
+            parentCollection: collId,
+            user: request.user.id
+          });
+
+          newLike.save()
+            .then(like => {
+              collection.likes.push(like.id);
+              response.json(collection);
+              collection.save().then(coll => {
+                response.json({ like });
+              });
+            }).catch(err => response.status(400).json(err));
+        }
+      }).catch(err => response.status(400).json(err));
+  }
+);
+
+//unlike a collection
+router.delete("/:collectionId/likes",
+  passport.authenticate("jwt", { session: false }),
+  (request, response) => {
+    let collId = request.params.collectionId;
+    let likeId;
+    let myId = request.user.id;
+
+    Like.findOneAndRemove({ parentCollection: collId, user: myId })
+      .then(like => {
+        likeId = like.id;
+        Collection.findById(collId).then(collection => {
+          collection.likes = collection.likes.filter(l => !l.equals(likeId));
+          collection.save()
+            .then(() => response.json({ msg: "Like removed" }))
+            .catch(() => response.json({ err: "Like was not removed" }));
+        });
+      });
   }
 );
 
