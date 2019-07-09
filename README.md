@@ -1,27 +1,23 @@
 # Reanimator
 
-*Reanimator, photo sharing app to assist users in making timelapse animations*
+## Reanimator, photo sharing app to assist users in making timelapse animations
 
 [Link to Live App](http://reanimator-bel.herokuapp.com)
 
 ## Background and Overview
+
 Reanimator's main feature is its ability to generate a timelapse animation from users uploading photos. When a user creates a new collection by taking the first photo, they will select an interval at which they want the app to notify them to upload another photo. This could be multiple times per day all the way up to once a month.
 
 Users will have profiles that will allow them to add other profiles as friends. This will populate their homepage with a feed of recently updated collections from their friends.
 
-Primary goals:
-* Create a database that can store user profiles with related data and photo collections
-* Generate a short animation from a collection of photos
-* Social system for users to friend other users to view their collections on their profiles and in their homepage feed
+## Functionality
 
-## Functionality & MVP
 1. User authorization (Sign up, log in, log out)
-1. Upload and save photos to user collections
-1. Generate video or gif from a collection
-1. Email notifications for users to take another photo
-1. Friending and homepage feed social features
-1. Production README
-```
+    * Provides secure, encrypted account creation using Bcrypt
+1. Upload and save photos to user collections using MongoDB and AWS
+1. Generate video or gif from a collection using JavaScript
+
+```javascript
 //secure sign up route for users
 router.post('/signup', (req, res) => {
   const { errors, isValid } = validateSignUpInput(req.body);
@@ -76,16 +72,22 @@ router.post('/signup', (req, res) => {
   });
 });
 ```
+
 ## Technologies & Technical Challenges
-This app will be built with the MERN stack. (MongoDB, Express, React, and Node.js)
+
+This app is built with the MERN stack. (MongoDB, Express, React, and Node.js)
 
 ### Backend
-MongoDB will be used for the database. The two main models it will manage are for the users and collections of photos. Express will be used to build up a framework to interact with and manage our database information.
+
+MongoDB is used for the database. The two main models it will manage are for the users and collections of photos. Express will be used to build up a framework to interact with and manage our database information and store and retrieve photos through AWS.
 
 ### Frontend
-Using React / Redux we will create all of our frontend views and manage the frontend state.
+
+Using React / Redux we created all of our frontend views and managed the frontend state to make this a single page app.
 
 ### Technical Challenges
+
 * Working with MongoDB and Express to build a new backend
-* Creating the timelapse generating technology (Ideally, it would generate a gif)
-* Interacting with the user's hardware to take pictures and display ghost of previous image
+  * This was a new tech stack when starting this project, so we had to quickly ramp up to implement
+* Creating the timelapse generating technology
+  * This had to be prototyped using custom JavaScript. We explored CSS animations, but found that it didn't offer the functionality we needed to adjust the animation of photos.
