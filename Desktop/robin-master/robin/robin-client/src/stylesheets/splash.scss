@@ -1,0 +1,97 @@
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  font-size: 18px;
+  font-family: fantasy;
+  font-weight: bold;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.left {
+  width: 35%;
+  height: 70%;
+}
+
+.right {
+  width: 25%;
+}
+.navBar-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 30px;
+  font-family: fantasy;
+  font-weight: bold;
+  margin-left: 15px;
+  text-decoration: none;
+  color: #d2691e;
+}
+
+.slogan {
+  margin-right: 60px;
+  font-size: 30px;
+  font-family: fantasy;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.home-links {
+  font-family: fantasy;
+  margin-right: 15px;
+}
+
+.app {
+  align-content: center;
+  color: #d2691e;
+}
+
+.auth-inputs {
+  text-align: center;
+  width: 200px;
+  height: 34px;
+  padding: 5px 5px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-family: fantasy;
+  font-weight: bold;
+  color: black;
+}
+
+.auth-btn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.auth-btn {
+  border: none;
+  color: #d2691e;
+  cursor: pointer;
+}
+
+.errors {
+  color: black;
+  font-size: 14px;
+}
+
+.nav-auth {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sign-up {
+  text-decoration: none;
+  color: #d2691e;
+}

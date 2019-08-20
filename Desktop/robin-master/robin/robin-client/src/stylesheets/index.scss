@@ -1,0 +1,30 @@
+.index-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.feed-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chirp-item-container {
+  display: flex;
+  justify-content: center;
+  border-width: 0.5px;
+  border-style: solid;
+  border-color: #d2691e;
+  width: 80%;
+  flex-direction: column;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.index-pic2 {
+  width: 50%;
+  height: 100%;
+}
+
+// .options {
+//   display: flex;
+//   flex-direction: column;
+// }
