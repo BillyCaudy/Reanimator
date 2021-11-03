@@ -34,7 +34,7 @@
     "passport-jwt": "^4.0.0",
     "react": "^16.8.6",
     "react-iframe": "^1.8.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.0"
